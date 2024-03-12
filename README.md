@@ -2,6 +2,7 @@
 
 # This repository contains the codes for our paperID_8872: 
 HLQ: Hardware-Friendly Logarithmic Quantization for Power-Efficient Low-Precision CNN Training
+### HLQ
 
 ## Requirements
 
@@ -16,17 +17,37 @@ HLQ: Hardware-Friendly Logarithmic Quantization for Power-Efficient Low-Precisio
 1. CIFAR-10/100
 If you run inference or training through main.py, the dataset will be downloaded automatically.
 2. ImageNet
-You can install imagenet dataset file[ImageNet dataset](https://www.image-net.org/download)
+You can install imagenet dataset file [ImageNet dataset](https://www.image-net.org/download)
 
 ## Training
+`models.quantizer.py' contains the configuration for quantization. In particular, you can specify them in the class `Conv2dQ`:
+```python
+class Conv2dQ(nn.Conv2d):
+    
+    def __init__(self, in_channels, out_channels, kernel_size,stride=1, padding=0, dilation=1,groups=1,bias=False, power=True, additive=True, grad_scale=None):
+        super(Conv2dQ, self).__init__(in_channels, out_channels, kernel_size, stride, padding, dilation, groups,bias)
+        
+        self.weight_quant = weight_quantization.apply
+        self.act_quant = act_quantization.apply
+        self.WL = log_WQ.apply
+        self.AL = log_AQ.apply
+ 
+        self.weight_alpha = Parameter(torch.tensor(-0.5))
+        self.act_alpha = Parameter(torch.tensor(-0.5))
+
+    def forward(self,x):
+        q_w = self.weight_quant(self.weight,self.weight_alpha)
+        q_a = self.act_quant(x,self.act_alpha)
+
+        y = F.conv2d(q_a,q_w,self.bias,self.stride ,self.padding,self.dilation,self.groups)
+        return y
+```
+You can change the initial rounding point by modifying the alpha parameter.
+
+
 ```bash
 python main.py --epochs 100 --lr 0.01 --data $DATA_PATH$
 ```
-
-##Unstructured Kernel Pruning
-You can find unstruct_kernel_pruning.py in fine_tuning_model/ directory
-
-python unstruct_kernel_pruning.py --path=[weight file path to prune] --save=[directory path to save pruned weight]
 
 
 ## References
