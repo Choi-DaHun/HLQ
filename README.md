@@ -13,8 +13,10 @@ HLQ: Hardware-Friendly Logarithmic Quantization for Power-Efficient Low-Precisio
    cuda
 
 ## Dataset Setting
-1. CIFAR-10 Model
+1. CIFAR-10/100
 If you run inference or training through main.py, the dataset will be downloaded automatically.
+2. ImageNet
+You can install imagenet dataset file[ImageNet dataset](https://www.image-net.org/download)
 
 ## Training
 ```bash
