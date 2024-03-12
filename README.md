@@ -18,7 +18,7 @@ If you run inference or training through main.py, the dataset will be downloaded
 You can install imagenet dataset file [ImageNet dataset](https://www.image-net.org/download)
 
 ## Training
-`models.quantizer.py' contains the configuration for quantization. In particular, you can specify them in the class `Conv2dQ`:
+`models.quantizer.py` contains the configuration for quantization. In particular, you can specify them in the class `Conv2dQ`:
 ```python
 class Conv2dQ(nn.Conv2d):
     
