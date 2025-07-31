@@ -1,5 +1,4 @@
-# This repository contains the codes for our paperID_8872: 
-HLQ: Hardware-Friendly Logarithmic Quantization for Power-Efficient Low-Precision CNN Training
+# HLQ: Hardware-Friendly Logarithmic Quantization for Power-Efficient Low-Precision CNN Training
 ### HLQ
 
 ## Requirements
